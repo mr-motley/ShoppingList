@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <item
+            android:id="@+id/menu_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/list_icon"
+            android:title="List"
+            app:showAsAction="always|withText" />
+        <item
+            android:id="@+id/menu_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tiled_cart"
+            android:title="Cart"
+            app:showAsAction="always|withText" />
+        <item
+            android:id="@+id/menu_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/history_icon"
+            android:title="Purchase History"
+            app:showAsAction="always|withText" />
+        <item
+            android:id="@+id/menu_settle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/dollar_icon"
+            android:title="Settle Costs"
+            app:showAsAction="always|withText" />
+    </group>
+    <item
+        android:id="@+id/menu_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/exit_icon"
+        android:title="Logout"
+        app:showAsAction="ifRoom|withText" />
+</menu>
