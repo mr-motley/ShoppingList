@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="#2196F3"
         android:gravity="center"
-        android:text="Shopping List"
+        android:text="Purchase History"
         android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"

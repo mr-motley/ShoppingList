@@ -54,7 +54,8 @@ public class ListActivity extends AppCompatActivity {
             Log.d(DEBUG_TAG, "Adding Fragment");
             return true;
         } else if (item.getItemId() == R.id.menu_history) {
-
+            fragment = new PurchaseHistory();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragFrame,fragment).commit();
             return true;
         } else if (item.getItemId() == R.id.menu_settle) {
 
