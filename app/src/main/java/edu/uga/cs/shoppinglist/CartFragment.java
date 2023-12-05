@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -37,6 +42,9 @@ public class CartFragment extends Fragment
     private String userId;
 
     private RecyclerView recyclerView;
+
+    private Button buybutton;
+    private EditText priceInput;
 
     private CartItemRecyclerAdapter recyclerAdapter;
 
@@ -68,6 +76,8 @@ public class CartFragment extends Fragment
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler);
+        buybutton = view.findViewById(R.id.button3);
+        priceInput = view.findViewById(R.id.editTextNumberDecimal);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -82,6 +92,25 @@ public class CartFragment extends Fragment
         itemList = new ArrayList<Item>();
         recyclerAdapter = new CartItemRecyclerAdapter(itemList,getContext());
         recyclerView.setAdapter(recyclerAdapter);
+
+        buybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!priceInput.getText().toString().isEmpty()){
+                    double price = Double.parseDouble(priceInput.getText().toString());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    Date date = new Date();
+                    String userName = mAuth.getCurrentUser().getEmail();
+                    Purchase purchase = new Purchase(itemList,userName,date.toString(),price);
+                    purchaseItems(purchase);
+                    priceInput.setText("");
+                } else{
+                    Toast.makeText(getContext(), "Error: Invalid price for purchase",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,6 +180,27 @@ public class CartFragment extends Fragment
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d(DEBUG_TAG,"failed to delete item at: " + position + "(" + item.getName() + ")");
                 Toast.makeText(getContext(), "Failed to delete " + item.getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void purchaseItems(Purchase purchase){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("shopItems/purchases");
+
+        myRef.push().setValue(purchase).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(DEBUG_TAG, "Items Successfully Purchased");
+                for(int i = purchase.getItems().size()-1; i >= 0; i--){
+                    removeFromCart(i,purchase.getItems().get(i));
+                }
+                //removeFromCart(0,purchase.getItems().get());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(DEBUG_TAG, "Purchase could not be added");
             }
         });
     }

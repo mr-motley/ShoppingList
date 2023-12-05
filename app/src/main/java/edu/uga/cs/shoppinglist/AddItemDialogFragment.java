@@ -36,7 +36,7 @@ public class AddItemDialogFragment extends DialogFragment {
         itemName = layout.findViewById(R.id.itemName);
         itemQuant = layout.findViewById(R.id.itemQuant);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), androidx.appcompat.R.style.AlertDialog_AppCompat);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         builder.setView(layout);
 
         builder.setTitle("New Item");

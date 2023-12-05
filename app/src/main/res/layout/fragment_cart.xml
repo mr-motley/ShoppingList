@@ -36,14 +36,30 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/button3"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Purchase Items"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler">
+
+            <EditText
+                android:id="@+id/editTextNumberDecimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Price"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Purchase Items" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
